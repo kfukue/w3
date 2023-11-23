@@ -51,6 +51,15 @@ func Dial(rawurl string, opts ...Option) (*Client, error) {
 	return NewClient(client, opts...), nil
 }
 
+// Dial Add Client Option forom rpc.ClientOptions in go-ethereum
+func DialWithClientOptions(rawurl string, clientOptions rpc.ClientOption, opts ...Option) (*Client, error) {
+	client, err := rpc.DialOptions(context.Background(), rawurl, clientOptions)
+	if err != nil {
+		return nil, err
+	}
+	return NewClient(client, opts...), nil
+}
+
 // MustDial is like [Dial] but panics if the connection establishment fails.
 func MustDial(rawurl string, opts ...Option) *Client {
 	client, err := Dial(rawurl, opts...)
